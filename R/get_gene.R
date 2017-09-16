@@ -30,5 +30,5 @@ get_gene <- function(gene_name, data, plot = F, seq = NA, genedf) {
             }
         }
     }
-    gene
+    invisible(gene)
 }

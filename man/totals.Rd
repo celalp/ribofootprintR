@@ -2,19 +2,20 @@
 \alias{totals}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-retuns the total number of reads that map to an ORF and the total coverage per ORF
+Retuns the total number of reads that map to an ORF and the total coverage per ORF
 %%  ~~function to do ... ~~
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-totals(data, genedf, seq)
+totals(data, genedf, plot = F, cores = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-  object returned by read_profiling_data
+  object returned by \code{read_profiling_data}
+
 %%     ~~Describe \code{data} here~~
 }
   \item{genedf}{
@@ -22,16 +23,23 @@ totals(data, genedf, seq)
 
 %%     ~~Describe \code{genedf} here~~
 }
-  \item{seq}{
-  fix this
-%%     ~~Describe \code{seq} here~~
+  \item{plot}{
+  logical, whether to plot a scatterplot of results, defaults to F
+%%     ~~Describe \code{plot} here~~
+}
+  \item{cores}{
+  integer, number of threads to use. See details.
+%%     ~~Describe \code{cores} here~~
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-returns a data frame where each row is a gene and sums of RNA-Seq coverage and total number of ribosome profiling reads per gene. If there is no RNA-Seq data coverages are set to \code{NA}
+returns a data frame where each row is a gene and sums of RNA-Seq coverage and total number of ribosome profiling reads per gene. If there is no RNA-Seq data coverages are set to NA
+
+Currently PSOCK multithreadding is not supported. For Windows set cores to 1. For operating systems that support forking the number of threads that are used can be set by the cores argument. If the cores>1 then the data is processed by mclapply instead of lapply.
+
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -43,6 +51,7 @@ returns a data frame where each row is a gene and sums of RNA-Seq coverage and t
 }
 \author{
 Alper Celik
+%%  ~~who you are~~
 }
 \note{
 %%  ~~further notes~~
@@ -59,7 +68,7 @@ Alper Celik
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (data, genedf, seq)
+function (data, genedf, plot = F, cores = 1)
 {
     summer <- function(nuc, df) {
         a <- df[df$nucleotide == nuc, ]
@@ -68,7 +77,8 @@ function (data, genedf, seq)
     }
     genes <- genedf$gene
     get_data <- function(gene_name) {
-        gene <- get_gene(gene = gene_name, data = data, seq = seq)
+        gene <- get_gene(gene = gene_name, genedf = genedf, data = data,
+            seq = NA)
         if (is.null(gene)) {
             NULL
         }
@@ -91,12 +101,25 @@ function (data, genedf, seq)
             }
         }
     }
-    totals <- do.call("rbind", mclapply(genes, get_data, mc.cores = (detectCores() -
-        1)))
-    if (is.null(data$rna)) {
-        totals$sum_coverage <- NA
+    if (cores > 1) {
+        totals <- do.call("rbind", mclapply(genes, get_data,
+            mc.cores = cores))
+        if (is.null(data$rna)) {
+            totals$sum_coverage <- NA
+        }
     }
-    totals
+    else {
+        totals <- do.call("rbind", lapply(genes, get_data))
+        if (is.null(data$rna)) {
+            totals$sum_coverage <- NA
+        }
+    }
+    totals <- as.data.frame(totals)
+    if (plot) {
+        print(ggplot(totals, aes(x = sum_coverage, y = sum_ribo)) +
+            geom_point())
+    }
+    invisible(totals)
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

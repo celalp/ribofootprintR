@@ -2,58 +2,70 @@
 \alias{metagene_cds}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-get average ribosome footprint alignment to the codin sequence at the 5' and the 3' end
+Get average ribosome footprint alignment values at the 5' and 3' ends of coding sequences
 %%  ~~function to do ... ~~
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-metagene_cds(data, genes, before_start = 50, after_start = 100, before_stop = 100, after_stop = 50, norms = "total", seq)
+metagene_cds(data, genedf, before_start = 50, after_start = 100, before_stop = 100, after_stop = 50, norms = "total", cores = 1, plot = F)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-  list retuned by \code{read_profiling_data}
+  list retuned by read_profiling_data
+
 %%     ~~Describe \code{data} here~~
 }
-  \item{genes}{
-   data frame that contains the gene name, and the nucleotide coordinates of start and stop locations as well as number of nucleotites and codon of the ORF.
-%%     ~~Describe \code{genes} here~~
+  \item{genedf}{
+  data frame that contains the gene name, and the nucleotide coordinates of start and stop locations as well as number of nucleotites and codon of the ORF.
+
+%%     ~~Describe \code{genedf} here~~
 }
   \item{before_start}{
-  the number of nucleotide to calculate before the start nucleotide, defaults to 50
+  integer, the number of nucleotide to calculate before the start nucleotide, defaults to 50
+
 %%     ~~Describe \code{before_start} here~~
 }
   \item{after_start}{
-   the number of nucleotide to calculate after the start nucleotide, defaults to 100
+  integer, the number of nucleotide to calculate after the start nucleotide, defaults to 100
+
 %%     ~~Describe \code{after_start} here~~
 }
   \item{before_stop}{
-     the number of nucleotide to calculate before the stop nucleotide, defaults to 100
+  integer, the number of nucleotide to calculate before the stop nucleotide, defaults to 100
 
 %%     ~~Describe \code{before_stop} here~~
 }
   \item{after_stop}{
-       the number of nucleotide to calculate before the stop nucleotide, defaults to 50
+  integer, the number of nucleotide to calculate before the stop nucleotide, defaults to 50
 
 %%     ~~Describe \code{after_stop} here~~
 }
   \item{norms}{
-  normalization, character either "total", "rna" or "none". Defaults to "total"
+  character, normalization, character either "total", "rna" or "none". Defaults to "total"
+
 %%     ~~Describe \code{norms} here~~
 }
-  \item{seq}{
-  DNAString set object of the FASTA file used for alignment. This is only needed for the occupancy function otherwise can be set to NA
-%%     ~~Describe \code{seq} here~~
+  \item{cores}{
+  integer, number of threads to use. See details.
+%%     ~~Describe \code{cores} here~~
+}
+  \item{plot}{
+  logical, whether to plot or not, defaults to F
+%%     ~~Describe \code{plot} here~~
 }
 }
 \details{
 If norms is set to "total"" returns the average fraction of reads that map to the region specified. If norms are set to "rna" then the number of reads that map to each codon are divided by the RNA-Seq coverage. "none" returns the average number of reads per codon.
+
+Currently PSOCK multithreadding is not supported. For Windows set cores to 1. For operating systems that support forking the number of threads that are used can be set by the cores argument. If the cores>1 then the data is processed by mclapply instead of lapply.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 a data frame with normalized nucleotide values.
+
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -74,7 +86,7 @@ Alper Celik
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{metagene_bins}}, \code{\link{totals}}
+\code{\link{metagene_bins}}
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
@@ -83,8 +95,9 @@ Alper Celik
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (data, genes, before_start = 50, after_start = 100,
-    before_stop = 100, after_stop = 50, norms = "total", seq)
+function (data, genedf, before_start = 50, after_start = 100,
+    before_stop = 100, after_stop = 50, norms = "total", cores = 1,
+    plot = F)
 {
     returner <- function(nucleotide, frame, df) {
         a <- df[df$nucleotide == nucleotide & df$frame == frame,
@@ -96,9 +109,9 @@ function (data, genes, before_start = 50, after_start = 100,
         warning("No RNA-Seq data setting norms to total")
         norms = "total"
     }
-    gene_names <- genes$gene
-    get_cds <- function(gene_name, direction, norm = norms) {
-        gene <- get_gene(gene_name, data = data, seq = seq)
+    gene_names <- genedf$gene
+    get_cds <- function(gene_name, direction, norm = norms, genes = genedf) {
+        gene <- get_gene(gene_name, data = data, seq = NA, genedf = genes)
         if (is.null(gene) == T) {
             NULL
         }
@@ -131,26 +144,47 @@ function (data, genes, before_start = 50, after_start = 100,
             cdss
         }
     }
-    fives <- do.call("rbind", mclapply(gene_names, get_cds, "five",
-        mc.cores = (detectCores() - 1)))
+    if (cores > 1) {
+        fives <- do.call("rbind", mclapply(gene_names, get_cds,
+            "five", mc.cores = cores))
+    }
+    else {
+        fives <- do.call("rbind", lapply(gene_names, get_cds,
+            "five"))
+    }
     x <- unique(fives[, c(1, 3)])
+    x <- na.omit(x)
     counts <- mdply(x, returner, fives)
-    fives <- dplyr::left_join(unique(fives[, c(1, 2)]), counts,
-        by = "nucleotide")
-    colnames(fives)[4] <- "value"
-    fives$mean_value <- fives$value/length(gene_names)
-    threes <- do.call("rbind", mclapply(gene_names, get_cds,
-        "three", mc.cores = (detectCores() - 1)))
+    fives <- counts
+    colnames(fives)[3] <- "value"
+    fives$codon <- ceiling(fives$nucleotide/3)
+    if (cores > 1) {
+        threes <- do.call("rbind", mclapply(gene_names, get_cds,
+            "three", mc.cores = cores))
+    }
+    else {
+        threes <- do.call("rbind", lapply(gene_names, get_cds,
+            "three"))
+    }
     x <- unique(threes[, c(1, 3)])
+    x <- na.omit(x)
     counts <- mdply(x, returner, threes)
-    threes <- dplyr::left_join(unique(threes[, c(1, 2)]), counts,
-        by = "nucleotide")
-    colnames(threes)[4] <- "value"
-    threes$mean_value <- threes$value/length(gene_names)
+    threes <- counts
+    colnames(threes)[3] <- "value"
+    threes$codon <- ceiling(threes$nucleotide)
     fives$location <- "from_start"
     threes$location <- "from_stop"
     cds <- rbind(fives, threes)
     cds
+    fives$location <- "from_start"
+    threes$location <- "from_stop"
+    cds <- rbind(fives, threes)
+    if (plot) {
+        print(ggplot(cds, aes(x = codon, y = value, fill = frame)) +
+            geom_bar(stat = "identity", position = "dodge") +
+            facet_grid(. ~ location, scales = "free_x"))
+    }
+    invisible(cds)
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

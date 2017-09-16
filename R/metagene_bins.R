@@ -58,13 +58,14 @@ metagene_bins <- function(data, genedf, bins = 100, norms = "rna", simplify = "m
         }
     }
 
-    noinf <- function(a) {
-        loc <- is.infinite(a)
-        loc2 <- is.nan(a)
-        a <- a[!loc]
-        a <- a[!loc2]
-    }
+    #noinf <- function(a) {
+    #    loc <- is.infinite(a)
+    #    loc2 <- is.nan(a)
+    #    a <- a[!loc]
+    #    a <- a[!loc2]
+    #}
 
+    #supress error when the number of nucleotides is not divisible by # of bins
     genes <- genedf$gene
     if(cores>1){
       suppressWarnings(binned <- do.call("rbind", mclapply(genes, binner, mc.cores = cores, mc.cleanup = T)))
@@ -73,7 +74,7 @@ metagene_bins <- function(data, genedf, bins = 100, norms = "rna", simplify = "m
     }
 
     rownames(binned) <- genes
-    binned <- apply(binned, 2, noinf)
+    #binned <- apply(binned, 2, noinf)
 
     if (simplify == "mean") {
         binned <- data.frame(bin=1:bins, value=apply(binned, 2, mean, na.rm = T))
