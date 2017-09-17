@@ -14,12 +14,12 @@ metagene_cds(data, genedf, before_start = 50, after_start = 100, before_stop = 1
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-  list retuned by read_profiling_data
+  list returned by read_profiling_data
 
 %%     ~~Describe \code{data} here~~
 }
   \item{genedf}{
-  data frame that contains the gene name, and the nucleotide coordinates of start and stop locations as well as number of nucleotites and codon of the ORF.
+  data frame that contains the gene name, and the nucleotide coordinates of start and stop locations as well as number of nucleotides and codon of the ORF.
 
 %%     ~~Describe \code{genedf} here~~
 }

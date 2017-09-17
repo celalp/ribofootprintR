@@ -24,7 +24,7 @@ write_profiling_data(data, name)
 }
 }
 \details{
-this is a one line function for convenience. It's intended function is to ease movement of data between different computers. The resulting Rdata object is several orders of magnitute smaller than the .bam files.
+this is a one line function for convenience. It's intended function is to ease movement of data between different computers. The resulting Rdata object is several orders of magnitude smaller than the .bam files.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{

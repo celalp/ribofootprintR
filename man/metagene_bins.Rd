@@ -2,7 +2,7 @@
 \alias{metagene_bins}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Divide ORF into bins and retun either gene by gene or a summary value per bin
+Divide ORF into bins and return either gene by gene or a summary value per bin
 
 %%  ~~function to do ... ~~
 }
@@ -22,7 +22,7 @@ metagene_bins(data, genedf, bins = 100, norms = "rna", simplify = "mean", cores 
 %%     ~~Describe \code{data} here~~
 }
   \item{genedf}{
-   data frame that contains the gene name, and the nucleotide coordinates of start and stop locations as well as number of nucleotites and codon of the ORF. This can be the whole trancriptome or a subset of the genedf used by \code{read_profiling_data}
+   data frame that contains the gene name, and the nucleotide coordinates of start and stop locations as well as number of nucleotides and codon of the ORF. This can be the whole transcriptome or a subset of the genedf used by \code{read_profiling_data}
 %%     ~~Describe \code{genedf} here~~
 }
   \item{bins}{
@@ -53,11 +53,11 @@ metagene_bins(data, genedf, bins = 100, norms = "rna", simplify = "mean", cores 
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-Returns a molten data frame. Each ORF is divided by the number of bins specified and the mean occpancy is calculated for each ORF. If norms is selected to be "rna" the Ribosome profiling data is divided by the coverage from RNA-Seq. If norms is "total" then the fraction of reads mapping to each bin is calculted. "none" just returns average values. For the simplify argument if "none" is selected a molten data frame is returned where each gene and each bin is a row. This is done to make plotting easier. For other simplify options only one value per bin is returned.
+Returns a molten data frame. Each ORF is divided by the number of bins specified and the mean occupancy is calculated for each ORF. If norms is selected to be "rna" the ribosome profiling data is divided by the coverage from RNA-Seq. If norms is "total" then the fraction of reads mapping to each bin is calculated. "none" just returns average values. For the simplify argument if "none" is selected a molten data frame is returned where each gene and each bin is a row. This is done to make plotting easier. For other simplify options only one value per bin is returned.
 
-Currently PSOCK multithreadding is not supported. For Windows set cores to 1. For operating systems that support forking the number of threads that are used can be set by the cores argument. If the cores>1 then the data is processed by mclapply instead of lapply.
+Currently PSOCK multi threading is not supported. For Windows set cores to 1. For operating systems that support forking the number of threads that are used can be set by the cores argument. If the cores>1 then the data is processed by mclapply instead of lapply.
 
-In the simplify argumnet if "mean" or "median" is selected a line plot is returned. If simplify is set to be "none" then plotting is done by geom_smooth which uses generalized additive models.
+In the simplify argument if "mean" or "median" is selected a line plot is returned. If simplify is set to be "none" then plotting is done by geom_smooth which uses generalized additive models.
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}

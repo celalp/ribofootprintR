@@ -23,12 +23,12 @@ read_profiling_data(ribo, ribo_index, rna = NA, rna_index = NA, genedf, cores = 
 %%     ~~Describe \code{ribo_index} here~~
 }
   \item{rna}{
-  sorted indexed .bam file for RNA-Seq control, can be ignored defults to NA
+  sorted indexed .bam file for RNA-Seq control, can be ignored defaults to NA
 
 %%     ~~Describe \code{rna} here~~
 }
   \item{rna_index}{
-  index file for RNA-Seq control, can be ignored defults to NA
+  index file for RNA-Seq control, can be ignored defaults to NA
 
 %%     ~~Describe \code{rna_index} here~~
 }
@@ -47,7 +47,7 @@ read_profiling_data(ribo, ribo_index, rna = NA, rna_index = NA, genedf, cores = 
 }
 \details{
 
-For ribosome profling libraries the frame and is calculated by using the formula below
+For ribosome profiling libraries the frame and is calculated by using the formula below
 
 \deqn{mapped nucleotide = 1 based read start - orf start (based on genedf)}
 
@@ -55,7 +55,7 @@ the frame is the modulus of
 
 \deqn{frame = mapped nucleotide - ORF-start + 1 + (read length - 15)}
 
-when dividied by 3. This is done to make sure that all usable read lengths (18-30) all show predominantly 0 frame when there is good phasing. However this assumes that RNAseI is used for digestion and therefore is not compatible with MNase treated samples. For those samples please set \code{A_site_adjust=F}
+when divided by 3. This is done to make sure that all usable read lengths (18-30) all show predominantly 0 frame when there is good phasing. However this assumes that RNAseI is used for digestion and therefore is not compatible with MNase treated samples. For those samples please set \code{A_site_adjust=F}
 
 For RNA-Seq libraries simple coverage is calculated by using the \code{coverage} function of Rsamtools.
 
@@ -64,7 +64,7 @@ Currently PSOCK multithreadding is not supported. For Windows set cores to 1. Fo
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-A list of lists. The returned value is a list with two elements [[ribo]] and [[rna]] each of which are lists themselves. Within each sub-list each gene is a separate data frame. For profiling the columns are nucleotide # (- if in 5' UTR), frame, codon (- if in 5' UTR), read length and the number of reads that map for that frame and read_lenght. For RNA-Seq data, just nucleotide and coverage. If there is no RNA-Seq data then the RNA portion of the list is set to NULL
+A list of lists. The returned value is a list with two elements [[ribo]] and [[rna]] each of which are lists themselves. Within each sub-list each gene is a separate data frame. For profiling the columns are nucleotide # (- if in 5' UTR), frame, codon (- if in 5' UTR), read length and the number of reads that map for that frame and read_length. For RNA-Seq data, just nucleotide and coverage. If there is no RNA-Seq data then the RNA portion of the list is set to NULL
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}

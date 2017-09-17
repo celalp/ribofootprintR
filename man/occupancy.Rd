@@ -40,12 +40,12 @@ occupancy(data, seq, genedf, codon = T, norms = "rna", gene_list = F, frame = NA
 %%     ~~Describe \code{norms} here~~
 }
   \item{gene_list}{
-  logical, whether to aggregate all genes in genedf or retrun gene by gene values
+  logical, whether to aggregate all genes in genedf or return gene by gene values
 
 %%     ~~Describe \code{gene_list} here~~
 }
   \item{frame}{
-  integer, 0,1,2 or NA indicating whehter only reads from a specific frame should be counted. If set to NA all reads are counted.
+  integer, 0,1,2 or NA indicating whether only reads from a specific frame should be counted. If set to NA all reads are counted.
 %%     ~~Describe \code{frame} here~~
 }
   \item{cores}{
@@ -58,14 +58,14 @@ occupancy(data, seq, genedf, codon = T, norms = "rna", gene_list = F, frame = NA
 }
 }
 \details{
-Normalizations are similar to other functions. If "none" is selected then the total number of reads are returned. If "rna" is selected then the the average of the three nucletotides of the codon is used for normalization. If "total" is used then the fraction of reads that correspond to each codon or amino acid is returned.
+Normalizations are similar to other functions. If "none" is selected then the total number of reads are returned. If "rna" is selected then the the average of the three nucleotides of the codon is used for normalization. If "total" is used then the fraction of reads that correspond to each codon or amino acid is returned.
 
 Currently PSOCK multithreadding is not supported. For Windows set cores to 1. For operating systems that support forking the number of threads that are used can be set by the cores argument. If the cores>1 then the data is processed by mclapply instead of lapply.
 
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-a data frame containing the number of reads (or normalized values) with the number of codons or amino acids in the selection is returned. if gene_list=T then a list is retuneed where each element is a data frame with occupancy values and number of codons or amino acids.
+a data frame containing the number of reads (or normalized values) with the number of codons or amino acids in the selection is returned. if gene_list=T then a list is returned where each element is a data frame with occupancy values and number of codons or amino acids.
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -80,7 +80,7 @@ Alper Celik
 %%  ~~who you are~~
 }
 \note{
-warnings are supressed because some pseudogenes or putative proteins do not have annotated ORF lengths are not divisible by 3.
+warnings are suppressed because some pseudogenes or putative proteins do not have annotated ORF lengths are not divisible by 3.
 %%  ~~further notes~~
 }
 

@@ -22,10 +22,10 @@ list returned by read_profiling_data() function
 whether to plot the data frame, default=F
 }
   \item{seq}{
-DNAString set object of the FASTA file used for alignment. This is only needed for the occupancy function otherwise can be set to NA. Defaults to NA
+DNAStringset object of the FASTA file used for alignment. This is only needed for the occupancy function otherwise can be set to NA. Defaults to NA
 }
   \item{genedf}{
-a data frame that contains the gene name, and the nucleotide coordinates of start and stop locations as well as number of nucleotites and codon of the ORF.
+a data frame that contains the gene name, and the nucleotide coordinates of start and stop locations as well as number of nucleotides and codon of the ORF.
 }
 }
 \details{

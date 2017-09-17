@@ -2,7 +2,7 @@
 \alias{smith}
 \docType{data}
 \title{
-Ribosome profiiling and RNA-Seq library from Smith et. al.
+Ribosome profiling and RNA-Seq library from Smith et. al.
 %%   ~~ data name/kind ... ~~
 }
 \description{
@@ -14,7 +14,7 @@ Ribosome profiling and RNA-Seq libraries from WT S.Cerevisiae.
  This is the results of the \code{read_profiling_data} function. In addition to the n and rna elements the genedf and DNAStringset is present in \code{smith$genedf} and \code{smith$seq}
  }
 \details{
-These libraries are prepared in the presence of cycloheximide. The data is published by Smith et. al. PMID:  24931603. The raw data can be accessed at SRR125839 for ribosome profiling and SRR12558470. The aligment was done to an earlier version of yeast transcriptome that was generated manualy. A similar transcriptome and genedf can be generated using \code{generate_transcriptome} function.
+These libraries are prepared in the presence of cycloheximide. The data is published by Smith et. al. PMID:  24931603. The raw data can be accessed at SRR125839 for ribosome profiling and SRR12558470. The alignment was done to an earlier version of yeast transcriptome that was generated manually. A similar transcriptome and genedf can be generated using \code{generate_transcriptome} function.
 
 Alignment was done with:
 

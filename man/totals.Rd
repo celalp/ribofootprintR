@@ -2,7 +2,7 @@
 \alias{totals}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Retuns the total number of reads that map to an ORF and the total coverage per ORF
+Returns the total number of reads that map to an ORF and the total coverage per ORF
 %%  ~~function to do ... ~~
 }
 \description{
@@ -24,7 +24,7 @@ totals(data, genedf, plot = F, cores = 1)
 %%     ~~Describe \code{genedf} here~~
 }
   \item{plot}{
-  logical, whether to plot a scatterplot of results, defaults to F
+  logical, whether to plot a scatter plot of results, defaults to F
 %%     ~~Describe \code{plot} here~~
 }
   \item{cores}{

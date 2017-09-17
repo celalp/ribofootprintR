@@ -7,7 +7,7 @@ Count the number of aligned reads per read length per frame
 %%  ~~function to do ... ~~
 }
 \description{
-This function counts the number of reads in the [[ribo]] list for all genes and returns a data frame with the number of reads per read lenght per frame.
+This function counts the number of reads in the [[ribo]] list for all genes and returns a data frame with the number of reads per read length per frame.
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
@@ -38,7 +38,7 @@ phasing(data, genedf, cores = 1, plot = F)
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-Returns a molten data frame that has the number of reads per read lenght per frame.
+Returns a molten data frame that has the number of reads per read length per frame.
 
 Currently PSOCK multithreadding is not supported. For Windows set cores to 1. For operating systems that support forking the number of threads that are used can be set by the cores argument. If the cores>1 then the data is processed by mclapply instead of lapply.
 

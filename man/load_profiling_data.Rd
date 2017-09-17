@@ -20,7 +20,7 @@ load_profiling_data(file_name)
 }
 }
 \details{
-load the Rdata back to the enviroment. This is a crude function. It just loads an Rdata file back to \code{Global Environment}.
+load the Rdata back to the environment. This is a crude function. It just loads an Rdata file back to \code{Global Environment}.
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
