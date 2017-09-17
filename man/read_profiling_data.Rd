@@ -2,6 +2,7 @@
 \alias{read_profiling_data}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
+Read .bam files and pre-process them for further analysis
 %%  ~~function to do ... ~~
 }
 \description{
