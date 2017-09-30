@@ -8,5 +8,5 @@ Description: Load, process and analyze ribosome footpring profiling data. This p
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: GenomicAlignments, ggplot2, plyr, dplyr, zoo, GenomicFeatures, reshape2, rlist
+Depends: GenomicAlignments, ggplot2, plyr, dplyr, zoo, GenomicFeatures, reshape2, rlist
 RoxygenNote: 6.0.1
