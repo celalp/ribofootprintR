@@ -1,4 +1,4 @@
-generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, cores=1, write=T, fasta_name, genedf_name){
+generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=30, cores=1, write=T, fasta_name, genedf_name){
   if(keep_introns){
     warning("If using a bioconductor TxDb object some introns may be ignored try creating your own from a GFF file", call. = F)
   }
