@@ -1,7 +1,5 @@
 generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=30, cores=1, write=T, fasta_name, genedf_name){
-  if(keep_introns){
-    warning("If using a bioconductor TxDb object some introns may be ignored try creating your own from a GFF file", call. = F)
-  }
+ 
   cds<-cdsBy(TxDb, use.names=T)
   gene_names<-names(cds)
   five_UTR<-fiveUTRsByTranscript(TxDb, use.names=T)
