@@ -7,7 +7,7 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, 
   five_UTR<-fiveUTRsByTranscript(TxDb, use.names=T)
   three_UTR<-threeUTRsByTranscript(TxDb, use.names=T)
   chrlengths<-seqlengths(genome)
- 
+
   #get coordinates
   #fix chromosome edges so that utr fill does not end up in the next thing
   get_ranges<-function(gene_name){
@@ -38,9 +38,9 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, 
           gene_threeUTR$start<-1
           gene_threeUTR$end<-gene_cds$start[1]-1
         }
-      }  
+      }
     }
-    
+
     if(dim(gene_fiveUTR)[1]==0 && fill_utr){
       if(gene_cds$strand[1]=="+"){
         gene_fiveUTR<-gene_cds[1,]
@@ -59,7 +59,7 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, 
         }
       }
     }
-    
+
     if(dim(gene_fiveUTR)[1]>0){
       gene_fiveUTR$class<-"five_UTR"
       gene<-rbind.fill(gene_cds, gene_fiveUTR)
@@ -83,10 +83,10 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, 
     gene
   }
 
-  if(cores=1){
-    gene_list<-lapply(gene_names, get_ranges)
-  } else {
+  if(cores>1){
     gene_list<-mclapply(gene_names, FUN = get_ranges, mc.cores = cores)
+  } else {
+    gene_list<-lapply(gene_names, get_ranges)
   }
   names(gene_list)<-gene_names
   #get sequence
@@ -104,7 +104,7 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, 
   }
   names(seq_list)<-gene_names
   #make genedf
-  make_genedf<-function(gene_name){  
+  make_genedf<-function(gene_name){
     gene<-seq_list[[gene_name]]
     five_w<-width(gene[names(gene)=="five_UTR"])
     three_w<-width(gene[names(gene)=="three_UTR"])
@@ -122,7 +122,6 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, 
   }
   invisible(support)
 }
-  
 
 
 
@@ -139,4 +138,5 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, 
 
 
 
-     
+
+
