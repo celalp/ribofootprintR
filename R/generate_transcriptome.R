@@ -105,12 +105,16 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=30, c
   make_genedf<-function(gene_name){
     gene<-seq_list[[gene_name]]
     five_w<-width(gene[names(gene)=="five_UTR"])
-    if (is.null(dim(five_w))){
+    if (length(five_w)==0){
       five_w<-0
+    } else {
+      five_w<-sum(five_w)
     }
     three_w<-width(gene[names(gene)=="three_UTR"])
-    if (is.null(dim(three_w))){
+    if (length(three_w)==0){
       three_w<-0
+    } else {
+      three_w<-sum(three_w)
     }
     cds_w<-sum(width(gene[names(gene)=="cds"]))
     gene_df<-data.frame(gene=gene_name, start=five_w+1, end=sum(cds_w+five_w), ncodons=cds_w/3, nnuc=cds_w)
