@@ -1,10 +1,4 @@
----
-title: "Introducing ribofootprintR"
-md_document:
-  variant: markdown_github
----
-
-##Introduction
+# Introduction
 
 This is an extremely early version of the package I'm in the process of building. The idea is to provide users with a tool to analyse ribosome footprint profiling libraries. These libraries are generated from RNase treated cell lysates. The idea is to digest single stranded sections of mRNA so that only the ribosome protected portions will be available for sequencing. This way we can measure the protein production dynamics of all mRNAs simultaneously. 
 
@@ -25,8 +19,8 @@ devtools::install_github("celalp/ribofootprintR")
 
 In addition for the processing of .bam files it depends on [samtools](http://www.htslib.org/) library so make sure that samtools is in your $PATH.
 
-##Loading the Data
-Before we get to do any analysis we need to load the data. Let's first start with the data.frame and FASTA file. 
+## Loading the Data
+Before we get to do any analysis we need to load the data. 
 
 ```{r, eval=FALSE, include=T}
 library(ribofootprintR)
@@ -38,7 +32,7 @@ data<-read_profiling_data(ribo = "ribo-sorted.bam", ribo_index = "ribo-sorted.ba
                           genedf = genedf)
 ```
 
-
+## Analysis
 One important aspect of ribosome profiling data is that one first needs to determine whether profiling libraries actually have the needed three nucleotide periodicity. This can be done by using the `phasing()` function. 
 
 ```{r, eval=FALSE, include=T}
@@ -78,7 +72,7 @@ occ<-occupancy(data = selected, seq = seq, genedf = genedf)
 
 Portability and data sharing is an important feature of research. So after some analysis the data can be written to disk with `write_profiling_data` and loaded back with `load_profiling_data` functions. These save the data as an .Rdata object and they usually are <100MB per library which makes them easy to share over dropbox or other file sharing systems. 
 
-##Other features
+## Other features
 
 There are many normalization and display options in each function. You can see the function documentation for details. For this intial iteration I left the entire R code in the package documentation for other people to see easily. 
 
@@ -90,7 +84,7 @@ While .bam files can be several GB in size the processing done by `read_profilin
 
 Most of the functions in the package also contain a cores argument. For operating systems that allow forking (iOS, Linux) the calculations are passed to mclappy (instead of lapply) and uses user specified number of threads I opted against using detectCores not to violate any job scheduling system settings and if one is doing the calculations on a virtual machine the detectCores function may return `NA`. To enable forking the user needs to set the cores argument >1. Currently there is no windows multicore processing because when a PSOCK cluster is initialized in R all the necessary files would also be available in that cluster. Currently there is no check for whether the operating system is suitable for forking so it is up to the user to make sure. 
 
-###In the future
+### In the future
 
 For this to package to be bioconductor compatible I need also to implement S4 methods or at the very least convert the initial Rlist that is the output of `read_profiling_data` to be an S4 object. 
 
