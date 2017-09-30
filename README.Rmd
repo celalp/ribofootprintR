@@ -1,10 +1,4 @@
----
-title: "Introducing ribofootprintR"
-md_document:
-  variant: markdown_github
----
-
-##Introduction
+#Introduction
 
 This is an extremely early version of the package I'm in the process of building. The idea is to provide users with a tool to analyse ribosome footprint profiling libraries. These libraries are generated from RNase treated cell lysates. The idea is to digest single stranded sections of mRNA so that only the ribosome protected portions will be available for sequencing. This way we can measure the protein production dynamics of all mRNAs simultaneously. 
 
