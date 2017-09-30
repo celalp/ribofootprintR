@@ -43,7 +43,7 @@ metagene_bins <- function(data, genedf, bins = 100, norms = "rna", simplify = "m
 
     binner <- function(gene_name) {
         gene <- norm_gene(name=gene_name, gene_list=gene_list)
-        gene <- noinf(gene)
+        #gene <- noinf(gene)
         gene_bins <- 0
         for (i in 1:bins) {
             lower <- floor((length(gene)/bins) * (i - 1))
