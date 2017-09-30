@@ -97,10 +97,10 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=300, 
     names(seq)<-gene$class
     seq
   }
-  if(cores=1){
-    seq_list<-lapply(gene_names, get_seq)
-  } else {
+  if(cores>1){
     seq_list<-mclapply(gene_names, FUN = get_seq, mc.cores = cores)
+  } else {
+    seq_list<-lapply(gene_names, get_seq)
   }
   names(seq_list)<-gene_names
   #make genedf
