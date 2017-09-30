@@ -1,7 +1,5 @@
 generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=30, cores=1, write=T, fasta_name, genedf_name){
-  if(keep_introns){
-    warning("If using a bioconductor TxDb object some introns may be ignored try creating your own from a GFF file", call. = F)
-  }
+
   cds<-cdsBy(TxDb, use.names=T)
   gene_names<-names(cds)
   five_UTR<-fiveUTRsByTranscript(TxDb, use.names=T)
@@ -107,12 +105,23 @@ generate_transcriptome<-function(genome, TxDb, fill_utr=F, utr_fill_length=30, c
   make_genedf<-function(gene_name){
     gene<-seq_list[[gene_name]]
     five_w<-width(gene[names(gene)=="five_UTR"])
+    if (is.null(dim(five_w))){
+      five_w<-0
+    }
     three_w<-width(gene[names(gene)=="three_UTR"])
+    if (is.null(dim(three_w))){
+      three_w<-0
+    }
     cds_w<-sum(width(gene[names(gene)=="cds"]))
     gene_df<-data.frame(gene=gene_name, start=five_w+1, end=sum(cds_w+five_w), ncodons=cds_w/3, nnuc=cds_w)
     gene_df
   }
-  genedf<-do.call("rbind", lapply(gene_names, make_genedf))
+  if(cores>1){
+    genedf<-do.call("rbind", mclapply(X = gene_names, FUN = make_genedf, mc.cores = cores))
+  } else {
+    genedf<-do.call("rbind", lapply(gene_names, make_genedf))
+  }
+
   fasta<-lapply(seq_list, unlist)
   fasta<-DNAStringSet(fasta)
   support<-list(fasta=fasta, genedf=genedf)
