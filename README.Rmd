@@ -20,7 +20,7 @@ devtools::install_github("celalp/ribofootprintR")
 In addition for the processing of .bam files it depends on [samtools](http://www.htslib.org/) library so make sure that samtools is in your $PATH.
 
 ## Loading the Data
-Before we get to do any analysis we need to load the data. Let's first start with the data.frame and FASTA file. 
+Before we get to do any analysis we need to load the data. 
 
 ```{r, eval=FALSE, include=T}
 library(ribofootprintR)
