@@ -64,7 +64,7 @@ metagene_cds <- function(data, genedf, before_start = 50, after_start = 100, bef
     threes<-counts
     #threes<-dplyr::left_join(unique(threes[,c(1,2)]), counts, by="nucleotide")
     colnames(threes)[3]<-"value"
-    threes$codon<-ceiling(threes$nucleotide)
+    threes$codon<-ceiling(threes$nucleotide/3)
 
     fives$location<-"from_start"
     threes$location<-"from_stop"
