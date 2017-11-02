@@ -7,7 +7,7 @@ In addition to the .bam files the user also needs a FASTA file and a data.frame 
 Like most R packages this one also has a few dependencies. The R packages that ribofootprintR depends on are as follows:
 GenomicAlignments, ggplot2, plyr, dplyr, Rsamtools, zoo, GenomicFeatures, reshape2, rlist and Biostrings. Please make sure that you are running a recent version of R (>=3.4) and all packages are up to date. 
 
-To install the package after downloading the tarball please use the snippet
+To install the package please use the snippet
 
 ```{r, eval=FALSE, include=T}
 source("https://bioconductor.org/biocLite.R")

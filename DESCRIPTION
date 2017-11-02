@@ -1,4 +1,4 @@
-Package: riboFootprintR
+Package: ribofootprintR
 Type: Package
 Title: Fast data extraction and visualization from .bam files for ribosome footprint profiling experiments
 Version: 0.1.0
