@@ -45,7 +45,7 @@ metagene_cds <- function(data, genedf, before_start = 50, after_start = 100, bef
     } else {
       fives<-do.call("rbind", lapply(gene_names, get_cds, "five"))
     }
-    x<-unique(fives[,c(1,3)])
+    x<-unique(fives[,c("nucleotide","frame")])
     x<-na.omit(x)
     counts<-mdply(x, returner, fives)
     fives<-counts
@@ -58,7 +58,7 @@ metagene_cds <- function(data, genedf, before_start = 50, after_start = 100, bef
     } else {
       threes<-do.call("rbind", lapply(gene_names, get_cds, "three"))
     }
-    x<-unique(threes[,c(1,3)])
+    x<-unique(threes[,c("nucleotide","frame")])
     x<-na.omit(x)
     counts<-mdply(x, returner, threes)
     threes<-counts
