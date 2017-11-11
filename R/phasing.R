@@ -23,7 +23,8 @@ phasing <- function(data, genedf, cores=1, plot=F) {
     phasing <- reshape2::melt(phasing)
     colnames(phasing) <- c("read_length", "frame", "number_of_reads")
     if(plot){
-      print(ggplot(phasing, aes(x=read_length, y=number_of_reads, fill=frame))+geom_bar(stat="identity", position="dodge"))
+      print(ggplot(phasing, aes(x=read_length, y=number_of_reads, fill=frame))+geom_bar(stat="identity", position="dodge")+
+              theme(axis.text.x = element_text(angle = 90, hjust = 1)))
     }
     invisible(phasing)
 
