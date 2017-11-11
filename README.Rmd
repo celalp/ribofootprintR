@@ -1,3 +1,12 @@
+# Updates to the original package
+
+There is now a new function called rrp, short for relative ribosome positioning. This function calculates where withing the ORF the percentage of the reads specified goes up to. For example if the specified percentage is 50, the function calculates (in it's own way, see function doc for details) where within the ORF the cumulatibe 50% of the reads reside. This was originally concieved by Richard Baker at UMASS Medical School. Though conceptually similar the way these numbers are calculated are quite different from his original script. 
+
+### Coming soon!
+A function based on `plyr::mdply` as a wrapper to compare different runs of the same function. 
+A wrapper function to run all the functions in the package and annotate them as `attr` for later use. 
+
+
 # Introduction
 
 This is an extremely early version of the package I'm in the process of building. The idea is to provide users with a tool to analyse ribosome footprint profiling libraries. These libraries are generated from RNase treated cell lysates. The idea is to digest single stranded sections of mRNA so that only the ribosome protected portions will be available for sequencing. This way we can measure the protein production dynamics of all mRNAs simultaneously. 

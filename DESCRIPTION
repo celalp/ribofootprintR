@@ -1,7 +1,7 @@
 Package: ribofootprintR
 Type: Package
 Title: Fast data extraction and visualization from .bam files for ribosome footprint profiling experiments
-Version: 0.1.0
+Version: 0.2.0
 Author: Alper Celik
 Maintainer: Alper Celik <alpergithub@gmail.com>
 Description: Load, process and analyze ribosome footpring profiling data. This packages allows fast and low memory analysis of sorted and indexed .bam files. The package relies on the Samtools C libraries for initial processing so make sure that they are installed and are in PATH.
